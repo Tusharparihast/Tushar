@@ -37,8 +37,8 @@ function MainDashboard() {
 }
 
 function AppContent() {
-  // Initialize loading state directly based on screen width to avoid flickering
-  const [loading, setLoading] = useState(() => window.innerWidth >= 768);
+  // Initialize loading state directly based on screen width AND homepage path to avoid sub-page flickering
+  const [loading, setLoading] = useState(() => window.innerWidth >= 768 && window.location.pathname === '/');
   const { hash, pathname, state } = useLocation();
 
   // A persistent lock flag to let subsequent effects know a reload happened
@@ -76,8 +76,8 @@ function AppContent() {
       isReloadSessionRef.current = true; // Mark session as a reload cycle
       sessionStorage.removeItem('return_to_id');
       
+      // Only force redirect to root configuration if the user was refreshing from the homepage directory
       if (window.location.pathname !== '/') {
-        window.location.replace('/'); 
         return;
       }
       
