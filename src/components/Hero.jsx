@@ -14,7 +14,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full max-w-full flex flex-col items-center justify-center px-5 sm:px-8 md:px-12 lg:px-24 overflow-hidden bg-transparent isolate">
+    <section 
+      id="top" 
+      className="relative min-h-screen w-full max-w-full flex flex-col items-start justify-center px-5 sm:px-8 md:px-12 lg:px-24 overflow-hidden bg-transparent isolate"
+    >
 
       {/* Hero Background Image - Locked at z-0 (Bottom Layer) */}
       <div
@@ -22,38 +25,31 @@ export default function Hero() {
         style={{ backgroundImage: "url('/hero.png')" }}
       />
 
-      {/* Mobile Contrast Overlay - z-0 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-900/60 to-slate-950/80 md:bg-none pointer-events-none z-0" />
-
-      {/* 
-        NOTE: Place your floating bubble/element components right here!
-        Give them `z-10` so they float ABOVE the background image (z-0) 
-        and BEHIND the main text content (z-20).
-      */}
+      {/* Floating Bubbles Layer (z-10) goes here */}
 
       {/* Main Content - Raised to z-20 (Top Layer) */}
       <div className="relative z-20 w-full max-w-7xl mx-auto flex items-center py-16 sm:py-20">
 
-        {/* HERO TYPOGRAPHY */}
-        <div className="w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+        {/* HERO TYPOGRAPHY - Left Aligned on Mobile and Desktop */}
+        <div className="w-full flex flex-col items-start text-left">
 
-          {/* System Status */}
+          {/* System Status - Light pill style matching image */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900/80 md:bg-slate-50/80 backdrop-blur border border-slate-700 md:border-slate-200 text-slate-200 md:text-slate-500 rounded-md font-mono text-[10px] sm:text-xs tracking-widest uppercase mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50/80 backdrop-blur border border-slate-200 text-slate-600 rounded-md font-mono text-[10px] sm:text-xs tracking-widest uppercase mb-6 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             [SYSTEM STATUS: RUNNING]
           </motion.div>
 
-          {/* Main Heading */}
+          {/* Main Heading - Dark top lines, White shaded bottom line */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-mellow text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.12] sm:leading-[1.05] md:leading-[0.95] mb-6 sm:mb-7 max-w-5xl text-white md:text-[#0B1220] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] md:drop-shadow-[0_2px_3px_rgba(255,255,255,0.35)]"
+            className="font-serif font-medium text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] sm:leading-[1.02] md:leading-[0.95] mb-6 sm:mb-7 max-w-5xl text-[#0B1220] drop-shadow-[0_2px_3px_rgba(255,255,255,0.35)]"
           >
             Teaching Machines
             <br />
@@ -77,32 +73,32 @@ export default function Hero() {
             </span>
           </motion.h1>
 
-          {/* Description */}
+          {/* Description - Dark text on both mobile and desktop */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xs sm:text-base md:text-lg text-slate-200 sm:text-white font-normal max-w-2xl leading-relaxed mb-8 drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)]"
+            className="text-xs sm:text-base md:text-lg text-neutral-900 font-normal max-w-2xl leading-relaxed mb-8 drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]"
           >
             AI Undergraduate student building intelligent systems through
             Computer Vision, Machine Learning, and Intelligent Automation.
           </motion.p>
 
-          {/* Sharp Modern Buttons Container */}
+          {/* Sharp Modern Buttons with Smooth Transitions */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
           >
 
-            {/* Primary CTA: Vibrant Blue with Glow & Arrow */}
+            {/* Primary CTA */}
             <a
               href="#projects"
-              className="w-full sm:w-auto px-6 py-3 bg-[#1A6CFF] hover:bg-blue-600 text-white font-bold rounded-lg text-sm shadow-[0_8px_20px_rgba(26,108,255,0.35)] text-center flex items-center justify-center gap-2 transition-all transform active:scale-95 hover:-translate-y-0.5"
+              className="group w-full sm:w-auto px-6 py-3 bg-[#1A6CFF] hover:bg-[#2B77FF] text-white font-bold rounded-lg text-sm shadow-[0_8px_20px_rgba(26,108,255,0.3)] hover:shadow-[0_12px_28px_rgba(26,108,255,0.5)] text-center flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95"
             >
               <span>Explore Projects</span>
-              <FiArrowRight size={16} />
+              <FiArrowRight size={16} className="transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
             </a>
 
             {/* Secondary Buttons Row */}
@@ -113,17 +109,17 @@ export default function Hero() {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 hover:bg-[#0F1623] text-white border border-slate-700/70 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-all transform active:scale-95 hover:-translate-y-0.5 shadow-sm"
+                className="group w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 hover:bg-[#121A2A] text-white border border-slate-700/70 hover:border-slate-500/80 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 shadow-sm"
               >
-                <FiFileText size={16} className="text-slate-200" />
+                <FiFileText size={16} className="text-slate-300 group-hover:text-white transition-colors duration-300" />
                 <span>Resume</span>
-                <FiExternalLink size={14} className="text-slate-300" />
+                <FiExternalLink size={14} className="text-slate-400 group-hover:text-white transition-colors duration-300" />
               </a>
 
               {/* Contact Button */}
               <a
                 href="#contact"
-                className="w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 hover:bg-[#0F1623] text-white border border-slate-700/70 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-all transform active:scale-95 hover:-translate-y-0.5 shadow-sm"
+                className="w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 hover:bg-[#121A2A] text-white border border-slate-700/70 hover:border-slate-500/80 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:scale-95 shadow-sm"
               >
                 Let's Connect
               </a>
@@ -143,7 +139,7 @@ export default function Hero() {
           repeat: Infinity,
           delay: 1,
         }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 pointer-events-none z-20 hidden sm:block"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-700 pointer-events-none z-20 hidden sm:block"
       >
         <FiArrowDown size={20} />
       </motion.div>

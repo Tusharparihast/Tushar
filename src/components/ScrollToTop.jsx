@@ -1,26 +1,28 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigationType } from "react-router-dom";
 
 export default function ScrollToTop() {
   const { pathname, hash } = useLocation();
+  const navigationType = useNavigationType(); // Detects "PUSH", "REPLACE", or "POP" (back/forward)
 
   useEffect(() => {
-    // 🚀 FIX FOR REFRESHES: Tell the browser to stop forcing its cached history scroll position
+    // Enable browser's native scroll restoration for POP (Back/Forward) events
     if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
+      window.history.scrollRestoration = 'auto';
     }
 
-    // If the target URL contains an anchor link hash (like #projects),
-    // abort this hook immediately and let HashLink safely take over scrolling down!
+    // Do nothing if navigating with a hash anchor (e.g. #projects)
     if (hash) return;
 
-    // Force the window to snap to the top-left corner instantly on normal route switches
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant", 
-    });
-  }, [pathname, hash]); // Listen to both layout switches and section anchor targets
+    // Only scroll to top on new page navigations (PUSH/REPLACE), NOT when pressing Back (POP)
+    if (navigationType !== "POP") {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant",
+      });
+    }
+  }, [pathname, hash, navigationType]);
 
   return null;
 }

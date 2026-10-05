@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavHashLink as Link } from 'react-router-hash-link';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,8 +27,10 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const [activeSection, setActiveSection] = useState('top');
   const location = useLocation();
   const navigate = useNavigate();
+  const clickedSection = useRef(null);
 
   const navLinks = [
+    { title: 'Home', path: '/#top', id: 'top' },
     { title: 'About', path: '/#about', id: 'about' },
     { title: 'My Journey', path: '/#journey', id: 'journey' },
     { title: 'Projects', path: '/#projects', id: 'projects' },
@@ -37,19 +39,45 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
     { title: 'Contact', path: '/#contact', id: 'contact' },
   ];
 
+  // 1. Intersection Observer for Sections + Scroll Listener for Home
   useEffect(() => {
     if (location.pathname !== '/') return;
 
+    const handleScroll = () => {
+      if (window.scrollY < 150) {
+        clickedSection.current = null;
+        setActiveSection('top');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observerOptions = {
       root: null,
-      rootMargin: '-40% 0px -50% 0px',
-      threshold: 0,
+      rootMargin: '-10% 0px -40% 0px',
+      threshold: 0.1,
     };
 
     const observerCallback = (entries) => {
+      if (window.scrollY < 150) {
+        setActiveSection('top');
+        return;
+      }
+
       entries.forEach((entry) => {
         if (entry.isIntersecting && window.location.pathname === '/') {
+          if (
+            clickedSection.current &&
+            entry.target.id !== clickedSection.current
+          ) {
+            return;
+          }
+
           setActiveSection(entry.target.id);
+
+          if (entry.target.id === clickedSection.current) {
+            clickedSection.current = null;
+          }
         }
       });
     };
@@ -59,27 +87,20 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
       observerOptions
     );
 
-    const targets = [
-      'top',
-      'about',
-      'journey',
-      'gallery',
-      'projects',
-      'blog',
-      'contact',
-    ];
+    const targets = ['top', 'about', 'journey', 'gallery', 'projects', 'blog', 'contact'];
 
     targets.forEach((id) => {
       const el = document.getElementById(id);
-
-      if (el) {
-        observer.observe(el);
-      }
+      if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, [location.pathname]);
 
+  // 2. Track Route Switches
   useEffect(() => {
     const path = location.pathname;
 
@@ -91,13 +112,13 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
       setActiveSection('gallery');
     } else if (path === '/' && location.state?.scrollToId) {
       setActiveSection(location.state.scrollToId);
+    } else if (path === '/' && window.scrollY < 150) {
+      setActiveSection('top');
     }
   }, [location.pathname, location.state]);
 
   const triggerNavFlag = () => {
-    if (onLinkClick) {
-      onLinkClick();
-    }
+    if (onLinkClick) onLinkClick();
   };
 
   const scrollWithOffset = (el) => {
@@ -107,11 +128,13 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
       triggerNavFlag();
     }
 
-    const yCoordinate =
-      el.getBoundingClientRect().top + window.pageYOffset;
+    clickedSection.current = el.id;
+    setActiveSection(el.id);
+
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
 
     window.scrollTo({
-      top: yCoordinate - 80,
+      top: el.id === 'top' || el.id === 'hero' ? 0 : yCoordinate - 80,
       behavior: 'smooth',
     });
   };
@@ -119,6 +142,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const handleNavigationClick = (e, path, targetId) => {
     setIsOpen(false);
     setActiveSection(targetId);
+    clickedSection.current = targetId;
 
     if (location.pathname !== '/') {
       e.preventDefault();
@@ -141,15 +165,12 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const handleHomeClick = (e) => {
     setIsOpen(false);
     setActiveSection('top');
+    clickedSection.current = 'top';
 
     if (location.pathname !== '/') {
       e.preventDefault();
       triggerNavFlag();
       navigate('/');
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
     } else {
       e.preventDefault();
       triggerNavFlag();
@@ -168,9 +189,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
           to="/#top"
           onClick={handleHomeClick}
           className={`text-slate-900 font-mono font-bold tracking-tighter text-lg transition-colors ${
-            activeSection === 'top'
-              ? 'text-blue-600'
-              : 'hover:text-blue-600'
+            activeSection === 'top' ? 'text-blue-600' : 'hover:text-blue-600'
           }`}
         >
           [TP]
@@ -187,11 +206,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
                 to={link.path}
                 scroll={scrollWithOffset}
                 onClick={(e) =>
-                  handleNavigationClick(
-                    e,
-                    link.path,
-                    link.id
-                  )
+                  handleNavigationClick(e, link.path, link.id)
                 }
                 className={`relative whitespace-nowrap px-2 md:px-3 lg:px-4 py-2 rounded-full text-[11px] md:text-xs lg:text-sm font-medium font-mono tracking-wide transition-colors duration-200 ${
                   isActive
@@ -238,11 +253,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
                 to={link.path}
                 scroll={scrollWithOffset}
                 onClick={(e) =>
-                  handleNavigationClick(
-                    e,
-                    link.path,
-                    link.id
-                  )
+                  handleNavigationClick(e, link.path, link.id)
                 }
                 className={`text-lg font-bold font-mono border-b border-slate-200/30 pb-3 transition-colors ${
                   activeSection === link.id
