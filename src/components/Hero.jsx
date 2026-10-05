@@ -107,17 +107,16 @@ export default function Hero() {
             {/* Secondary Buttons Row */}
             <div className="grid grid-cols-2 sm:flex items-center gap-3 w-full sm:w-auto">
               
-              {/* Resume Button (Cyan / Sky Ink Fill) */}
+              {/* Resume Button (Identical Slate Ink Fill as Contact Button) */}
               <motion.a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-sky-400/80 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
+                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
               >
-                {/* Cyan/Sky Ink Fill */}
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-sky-600 via-cyan-500 to-teal-400 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
 
                 <span className="relative z-10 flex items-center justify-center gap-2 group-hover:text-white transition-colors duration-300">
                   <FiFileText size={16} className="text-slate-300 group-hover:text-white transition-colors duration-300" />
