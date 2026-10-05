@@ -192,7 +192,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
             activeSection === 'top' ? 'text-blue-600' : 'hover:text-blue-600'
           }`}
         >
-          [TP]
+          TP
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 lg:gap-2 absolute left-1/2 -translate-x-1/2">
@@ -211,7 +211,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
                 className={`relative whitespace-nowrap px-2 md:px-3 lg:px-4 py-2 rounded-full text-[11px] md:text-xs lg:text-sm font-medium font-mono tracking-wide transition-colors duration-200 ${
                   isActive
                     ? 'text-blue-700'
-                    : 'text-slate-700 hover:text-blue-700'
+                    : 'text-black hover:text-blue-700'
                 }`}
               >
                 <SmoothIndicator

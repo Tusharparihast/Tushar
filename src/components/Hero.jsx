@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FiArrowDown, FiArrowRight, FiExternalLink, FiFileText } from 'react-icons/fi';
+import { FiArrowDown, FiArrowRight, FiExternalLink, FiFileText, FiMail } from 'react-icons/fi';
 
 export default function Hero() {
   const [blink, setBlink] = useState(true);
@@ -16,73 +16,87 @@ export default function Hero() {
   return (
     <section 
       id="top" 
-      className="relative min-h-screen w-full max-w-full flex flex-col items-start justify-center px-5 sm:px-8 md:px-12 lg:px-24 overflow-hidden bg-transparent isolate"
+      className="relative min-h-screen w-full max-w-full flex flex-col items-start justify-center px-4 sm:px-8 md:px-12 lg:px-24 overflow-hidden bg-transparent isolate pt-12 md:pt-0"
     >
 
-      {/* Hero Background Image - Locked at z-0 (Bottom Layer) */}
+      {/* DESKTOP BACKGROUND IMAGE (Hidden on mobile) */}
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full bg-cover bg-center bg-no-repeat pointer-events-none z-0"
+        className="hidden md:block absolute top-0 left-1/2 -translate-x-1/2 w-screen h-full bg-cover bg-center bg-no-repeat pointer-events-none z-0"
         style={{ backgroundImage: "url('/hero.png')" }}
       />
 
-      {/* Main Content - Raised to z-20 (Top Layer) */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto flex items-center py-16 sm:py-20">
+      {/* MAIN CONTAINER */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center py-4 md:py-20">
 
-        {/* HERO TYPOGRAPHY - Left Aligned on Mobile and Desktop */}
+        {/* HERO CONTENT */}
         <div className="w-full flex flex-col items-start text-left">
 
-          {/* System Status */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50/80 backdrop-blur border border-slate-200 text-slate-600 rounded-md font-mono text-[10px] sm:text-xs tracking-widest uppercase mb-6 shadow-sm"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            [SYSTEM STATUS: RUNNING]
-          </motion.div>
+          {/* MOBILE EXPANDED BANNER WITH OVERLAY TEXT */}
+          <div className="relative w-full mb-5 md:mb-0">
 
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-serif font-medium text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] sm:leading-[1.02] md:leading-[0.95] mb-6 sm:mb-7 max-w-5xl text-[#0B1220] drop-shadow-[0_2px_3px_rgba(255,255,255,0.35)]"
-          >
-            Teaching Machines
-            <br />
+            {/* Mobile Vertical-Stretched Image Card */}
+            <div className="block md:hidden w-full min-h-[52vh] aspect-[4/5] rounded-3xl overflow-hidden shadow-xl border border-slate-200/60 relative">
+              <img 
+                src="/hero.png" 
+                alt="Hero Background" 
+                className="w-full h-full object-cover rounded-3xl"
+              />
+            </div>
 
-            <span>
-              to Understand
-            </span>
+            {/* TEXT LAYER (Fills vertically on Mobile, normal flex on Desktop) */}
+            <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-between items-start md:relative md:p-0 md:inset-auto">
 
-            <br />
+              {/* System Status */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50/90 backdrop-blur border border-slate-200/80 text-slate-700 rounded-lg font-mono text-[10px] sm:text-xs tracking-widest uppercase mb-auto md:mb-6 shadow-sm"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                [SYSTEM STATUS: RUNNING]
+              </motion.div>
 
-            <span className="text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.85)]">
-              the Visual World
-            </span>
+              {/* Text Group (Headline + Description) */}
+              <div className="w-full my-auto md:my-0">
+                {/* Main Heading */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="font-serif font-medium text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.12] sm:leading-[1.02] md:leading-[0.95] mb-3 md:mb-7 max-w-5xl text-[#0B1220] drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] md:drop-shadow-[0_2px_3px_rgba(255,255,255,0.35)]"
+                >
+                  Teaching Machines
+                  <br />
 
-            <span
-              className={`inline-block ml-1 sm:ml-2 text-[#7DD3FC] transition-opacity duration-100 ${
-                blink ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              _
-            </span>
-          </motion.h1>
+                  <span>
+                    to Understand
+                  </span>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xs sm:text-base md:text-lg text-neutral-900 font-normal max-w-2xl leading-relaxed mb-8 drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]"
-          >
-            AI Undergraduate student building intelligent systems through
-            Computer Vision, Machine Learning, and Intelligent Automation.
-          </motion.p>
+                  <br />
 
-          {/* Buttons Row */}
+                  <span className="text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                    the Visual World
+                  </span>
+                </motion.h1>
+
+                {/* Description */}
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-xs sm:text-base md:text-lg text-neutral-900 font-medium md:font-normal max-w-2xl leading-relaxed mb-0 md:mb-8 drop-shadow-[0_1px_2px_rgba(255,255,255,0.85)] md:drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]"
+                >
+                  AI Undergraduate student building intelligent systems through
+                  Computer Vision, Machine Learning, and Intelligent Automation.
+                </motion.p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* BUTTONS ROW (Placed directly below the card on mobile) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -95,7 +109,7 @@ export default function Hero() {
               href="#projects"
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="group relative overflow-hidden w-full sm:w-auto px-6 py-3 bg-[#1A6CFF] text-white font-bold rounded-lg text-sm shadow-[0_4px_14px_rgba(26,108,255,0.35)] text-center flex items-center justify-center gap-2"
+              className="group relative overflow-hidden w-full sm:w-auto px-6 py-3.5 md:py-3 bg-[#1A6CFF] text-white font-bold rounded-xl md:rounded-lg text-sm shadow-[0_4px_14px_rgba(26,108,255,0.35)] text-center flex items-center justify-center gap-2"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-500 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
               <span className="relative z-10 flex items-center justify-center gap-2">
@@ -107,14 +121,14 @@ export default function Hero() {
             {/* Secondary Buttons Row */}
             <div className="grid grid-cols-2 sm:flex items-center gap-3 w-full sm:w-auto">
               
-              {/* Resume Button (Identical Slate Ink Fill as Contact Button) */}
+              {/* Resume Button */}
               <motion.a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
+                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
               >
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
 
@@ -125,17 +139,22 @@ export default function Hero() {
                 </span>
               </motion.a>
 
-              {/* Contact Button (Slate Ink Fill) */}
+              {/* Contact Button (Smoothed Vertical-Slide Hover Effect) */}
               <motion.a
                 href="#contact"
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
+                className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm"
               >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
-                <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                  Let's Connect
-                </span>
+                {/* DEFAULT CONTENT */}
+                <div className="flex items-center justify-center gap-2 transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-10 group-hover:opacity-0 will-change-transform">
+                  <span>Let&apos;s Connect</span>
+                </div>
+
+                {/* HOVER SWIPE CONTENT */}
+                <div className="absolute inset-0 flex items-center justify-center gap-2 transform-gpu translate-y-10 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-slate-800 text-white will-change-transform">
+                  <FiMail size={16} className="transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110" />
+                </div>
               </motion.a>
 
             </div>

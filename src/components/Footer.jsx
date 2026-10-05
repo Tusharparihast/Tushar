@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiMail, FiArrowUp, FiInstagram, FiFacebook, FiX, FiCheckCircle } from 'react-icons/fi';
+import { 
+  FiGithub, 
+  FiLinkedin, 
+  FiMail, 
+  FiArrowUp, 
+  FiInstagram, 
+  FiFacebook, 
+  FiX, 
+  FiCheckCircle,
+  FiPhone,
+  FiMapPin
+} from 'react-icons/fi';
 
 export default function Footer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +27,6 @@ export default function Footer() {
       document.body.style.overflow = '';
     }
 
-    // Cleanup function to prevent locking the body permanently if the component unmounts
     return () => {
       document.body.style.overflow = '';
     };
@@ -34,7 +44,7 @@ export default function Footer() {
     const email = formData.get('email').trim();
     const message = formData.get('message').trim();
 
-    // 🛠️ Custom inline evaluation layer
+    // 🛠 Custom inline evaluation layer
     const newErrors = {};
     if (!name) newErrors.name = "Name is required";
     if (!email) {
@@ -46,7 +56,7 @@ export default function Footer() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      return; // Stop code stream execution
+      return;
     }
 
     setErrors({});
@@ -64,9 +74,8 @@ export default function Footer() {
       if (response.ok) {
         setIsSending(false);
         setIsSent(true);
-        e.target.reset(); // Clear form fields
+        e.target.reset();
         
-        // Close modal automatically after 2 seconds
         setTimeout(() => {
           setIsSent(false);
           setIsOpen(false);
@@ -80,7 +89,6 @@ export default function Footer() {
     }
   };
 
-  // Helper helper to handle manual error cleanup when user types
   const handleInputChange = (field) => {
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: null }));
@@ -88,63 +96,143 @@ export default function Footer() {
   };
 
   return (
-    <footer id="contact" className="bg-slate-900 text-slate-400 py-16 px-6 md:px-12 lg:px-24 relative overflow-hidden">
-      
-      {/* BACKGROUND ACCENTS */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(37,99,235,0.05),transparent_40%)] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
+    <footer id="contact" className="bg-[#0b1021] text-slate-300 pt-20 pb-10 px-6 md:px-12 lg:px-24 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
         
-        {/* FLOATING GLASS CALL TO ACTION CARD */}
-        <motion.div 
-          className="w-full max-w-4xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-md border border-slate-800 rounded-3xl p-8 md:p-12 text-center mb-16 shadow-xl relative z-10"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-4">
-            Let's build something intelligent together.
-          </h2>
-          <p className="text-slate-400 max-w-lg mx-auto text-sm md:text-base mb-8 leading-relaxed">
-            Whether you want to discuss computer vision pipelines, machine learning architectures, or dynamic web development, my inbox is open.
-          </p>
+        {/* MAIN SECTION: 2-COLUMN GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start mb-20">
           
-          <button 
-            onClick={() => setIsOpen(true)}
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-full shadow-lg shadow-blue-600/20 transition-all duration-200 active:scale-95"
+          {/* LEFT COLUMN: CALL TO ACTION */}
+          <motion.div 
+            className="lg:col-span-6 flex flex-col items-start pr-0 lg:pr-6"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            <FiMail size={18} /> Send an Email
-          </button>
-        </motion.div>
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-slate-400 font-semibold mb-6">
+              Get in Touch
+            </span>
 
-        {/* BOTTOM BRANDING & NAVIGATION LINKS */}
-        <div className="w-full border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6 z-10">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.15] mb-6">
+              Let&apos;s Build Something Intelligent.
+            </h2>
+
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-md mb-8">
+              Have a project in mind, collaboration idea, or just want to say hello? I&apos;d love to hear from you.
+            </p>
+
+            {/* HIGH-PERFORMANCE HARDWARE-ACCELERATED BUTTON */}
+            <button 
+              onClick={() => setIsOpen(true)}
+              className="relative group overflow-hidden px-7 py-3.5 bg-blue-600 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-600/20 active:scale-95 transform-gpu transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            >
+              {/* DEFAULT CONTENT */}
+              <div className="flex items-center gap-2.5 transform-gpu transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-12 group-hover:opacity-0 will-change-transform">
+                <FiMail size={18} />
+                <span>Get in touch</span>
+              </div>
+
+              {/* HOVER SWIPE CONTENT */}
+              <div className="absolute inset-0 flex items-center justify-center transform-gpu translate-y-12 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-blue-600 text-white will-change-transform">
+                <FiMail size={22} className="transform-gpu transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110" />
+              </div>
+            </button>
+          </motion.div>
+
+          {/* RIGHT COLUMN: CONTACT & LOCATION CARDS */}
+          <motion.div 
+            className="lg:col-span-6 flex flex-col gap-4"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {/* Card 1: Email */}
+            <a 
+              href="mailto:parihasttushar@gmail.com" 
+              className="group bg-[#11182e]/80 hover:bg-[#16203d] border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-4 md:p-5 transition-all duration-300 ease-out flex items-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-xl bg-blue-900/30 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 ease-out">
+                <FiMail size={20} />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs text-slate-400 font-medium mb-0.5">Email</span>
+                <span className="text-sm md:text-base text-slate-200 font-medium truncate group-hover:text-white">
+                  parihastushar@gmail.com
+                </span>
+              </div>
+            </a>
+
+            {/* Card 2: Phone Number */}
+            <a 
+              href="tel:+9779840036059" 
+              className="group bg-[#11182e]/80 hover:bg-[#16203d] border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-4 md:p-5 transition-all duration-300 ease-out flex items-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-xl bg-blue-900/30 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 ease-out">
+                <FiPhone size={20} />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs text-slate-400 font-medium mb-0.5">Phone</span>
+                <span className="text-sm md:text-base text-slate-200 font-medium truncate group-hover:text-white">
+                  +977 98XXXXXXXX
+                </span>
+              </div>
+            </a>
+
+            {/* Card 3: Location */}
+            <a 
+              href="https://maps.google.com/?q=Kathmandu,+Nepal" 
+              target="_blank" 
+              rel="noreferrer"
+              className="group bg-[#11182e]/80 hover:bg-[#16203d] border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-4 md:p-5 transition-all duration-300 ease-out flex items-center gap-4 cursor-pointer"
+            >
+              <div className="w-12 h-12 rounded-xl bg-blue-900/30 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/10 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 ease-out">
+                <FiMapPin size={20} />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs text-slate-400 font-medium mb-0.5">Location</span>
+                <span className="text-sm md:text-base text-slate-200 font-medium truncate group-hover:text-white">
+                  Kathmandu, Nepal
+                </span>
+              </div>
+            </a>
+
+            {/* Italic Tagline */}
+            <p className="text-slate-400 text-sm italic mt-2">
+              Let&apos;s create something great together.
+            </p>
+          </motion.div>
+
+        </div>
+
+        {/* BOTTOM BRANDING & NAVIGATION BAR */}
+        <div className="w-full border-t border-slate-800/80 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           
-          {/* Copyright text */}
+          {/* Copyright Text */}
           <div className="text-xs font-mono tracking-wider text-slate-500 order-2 sm:order-1">
-            © {new Date().getFullYear()} // TUSHAR PARIHAST. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} TUSHAR PARIHAST. ALL RIGHTS RESERVED.
           </div>
 
-          {/* Core footprint networking hubs */}
-          <div className="flex items-center gap-6 order-1 sm:order-2">
-            <a href="https://www.instagram.com/tus_rparihast/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors p-2 text-lg" title="Instagram">
-              <FiInstagram />
+          {/* Social Links & Scroll Button */}
+          <div className="flex items-center gap-5 order-1 sm:order-2">
+            <a href="https://www.instagram.com/tus_rparihast/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors p-1" title="Instagram">
+              <FiInstagram size={18} />
             </a>
-            <a href="https://www.facebook.com/tushar.parihast.7" target="_blank" rel="noreferrer" className="hover:text-white transition-colors p-2 text-lg" title="Facebook">
-              <FiFacebook />
+            <a href="https://www.facebook.com/tushar.parihast.7" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors p-1" title="Facebook">
+              <FiFacebook size={18} />
             </a>
-            <a href="https://github.com/Tusharparihast" target="_blank" rel="noreferrer" className="hover:text-white transition-colors p-2 text-lg" title="GitHub">
-              <FiGithub />
+            <a href="https://github.com/Tusharparihast" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors p-1" title="GitHub">
+              <FiGithub size={18} />
             </a>
-            <a href="https://www.linkedin.com/in/tushar-parihast-422107267/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors p-2 text-lg" title="LinkedIn">
-              <FiLinkedin />
+            <a href="https://www.linkedin.com/in/tushar-parihast-422107267/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors p-1" title="LinkedIn">
+              <FiLinkedin size={18} />
             </a>
             
-            {/* Scroll back up anchor controller */}
+            {/* Scroll to Top */}
             <button 
               onClick={scrollToTop}
-              className="p-2 ml-4 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition-all duration-200 border border-slate-700/50"
+              className="p-2.5 ml-2 bg-[#11182e] hover:bg-[#16203d] text-slate-400 hover:text-white rounded-xl transition-all duration-200 border border-slate-800/80"
               aria-label="Scroll to top"
             >
               <FiArrowUp size={16} />
@@ -166,7 +254,7 @@ export default function Footer() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => !isSending && setIsOpen(false)}
-              className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
             />
 
             {/* Modal Box */}
@@ -174,7 +262,7 @@ export default function Footer() {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl relative p-6 md:p-8 overflow-hidden text-slate-100 z-10"
+              className="bg-[#0f172a] border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl relative p-6 md:p-8 overflow-hidden text-slate-100 z-10"
             >
               {/* Close Button */}
               <button 
@@ -193,7 +281,7 @@ export default function Footer() {
                 >
                   <FiCheckCircle size={44} className="text-emerald-500 mb-4" />
                   <h3 className="text-lg font-bold text-white tracking-tight">Message Dispatched!</h3>
-                  <p className="text-xs text-slate-400 mt-1">Thanks for reaching out, I'll check it soon.</p>
+                  <p className="text-xs text-slate-400 mt-1">Thanks for reaching out, I&apos;ll check it soon.</p>
                 </motion.div>
               ) : (
                 <>
@@ -201,7 +289,6 @@ export default function Footer() {
                     <h3 className="text-xl font-bold text-white tracking-tight">Send a Message</h3>
                   </div>
 
-                  {/* Added noValidate to bypass native browser alert prompts */}
                   <form onSubmit={handleFormSubmit} noValidate className="space-y-4 font-sans text-left">
                     <div>
                       <label className="block text-xs font-mono font-semibold uppercase text-slate-400 mb-1.5">Your Name</label>
@@ -210,12 +297,12 @@ export default function Footer() {
                         name="name" 
                         disabled={isSending}
                         onChange={() => handleInputChange('name')}
-                        className={`w-full bg-slate-950 border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors disabled:opacity-50 ${
+                        className={`w-full bg-[#080d1a] border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors disabled:opacity-50 ${
                           errors.name ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-blue-500'
                         }`}
                         placeholder="John Doe" 
                       />
-                      {errors.name && <p className="text-[11px] text-red-400 font-mono mt-1"> {errors.name}</p>}
+                      {errors.name && <p className="text-[11px] text-red-400 font-mono mt-1">{errors.name}</p>}
                     </div>
                     
                     <div>
@@ -225,12 +312,12 @@ export default function Footer() {
                         name="email" 
                         disabled={isSending}
                         onChange={() => handleInputChange('email')}
-                        className={`w-full bg-slate-950 border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors disabled:opacity-50 ${
+                        className={`w-full bg-[#080d1a] border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors disabled:opacity-50 ${
                           errors.email ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-blue-500'
                         }`}
                         placeholder="john@example.com" 
                       />
-                      {errors.email && <p className="text-[11px] text-red-400 font-mono mt-1"> {errors.email}</p>}
+                      {errors.email && <p className="text-[11px] text-red-400 font-mono mt-1">{errors.email}</p>}
                     </div>
                     
                     <div>
@@ -240,12 +327,12 @@ export default function Footer() {
                         rows="4" 
                         disabled={isSending}
                         onChange={() => handleInputChange('message')}
-                        className={`w-full bg-slate-950 border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-none disabled:opacity-50 ${
+                        className={`w-full bg-[#080d1a] border rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-none disabled:opacity-50 ${
                           errors.message ? 'border-red-500/80 focus:border-red-500' : 'border-slate-800 focus:border-blue-500'
                         }`}
                         placeholder="Let's build something..." 
                       />
-                      {errors.message && <p className="text-[11px] text-red-400 font-mono mt-1"> {errors.message}</p>}
+                      {errors.message && <p className="text-[11px] text-red-400 font-mono mt-1">{errors.message}</p>}
                     </div>
 
                     <button 
