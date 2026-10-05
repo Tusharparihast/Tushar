@@ -118,7 +118,7 @@ function AppContent() {
     }
 
     const storedTargetId = sessionStorage.getItem('return_to_id');
-    const targetId = state?.scrollToId || storedTargetId || (hash ? hash.replace('#', '') : null);
+    const targetId = state?.scrollToId || storedTargetId;
 
     if (targetId) {
       const checkAndScroll = () => {
@@ -143,10 +143,8 @@ function AppContent() {
         }, 10); 
         return () => clearInterval(checkInterval);
       }
-    } else {
-      if (pathname === '/' && !state?.scrollToId) {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      }
+    } else if (pathname === '/' && !hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, [hash, pathname, loading, state]);
 
