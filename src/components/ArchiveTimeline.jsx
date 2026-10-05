@@ -1,10 +1,11 @@
-import { useEffect } from 'react'; // 👈 Added useEffect
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiCalendar, FiArrowLeft } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const TIMELINE_DATA = [
   {
+    id: 1,
     date: 'June, 2026',
     title: 'eSewa Hackathon',
     desc: 'The best hackathon experience of my life — filled with ideas, friendships, sleepless nights, and memories that will stay with me forever.',
@@ -19,6 +20,7 @@ const TIMELINE_DATA = [
     ]
   },
   {
+    id: 2,
     date: 'January, 2026',
     title: 'AI Conclave',
     desc: 'Served as a Stall Lead at AI Conclave, coordinating demonstrations, engaging visitors, and showcasing AI innovations during the event.',
@@ -28,6 +30,7 @@ const TIMELINE_DATA = [
     ]
   },
   {
+    id: 3,
     date: 'June, 2025',
     title: 'Hack for Nepal - 2025',
     desc: 'Ideas, teamwork, laughs, and a little bit of chaos — Hack for Nepal 2025 was a memorable journey.',
@@ -36,10 +39,10 @@ const TIMELINE_DATA = [
       '/images/TimeLine/Hack4Nepal/me.jpeg',
       '/images/TimeLine/Hack4Nepal/certificate.jpeg',
       '/images/TimeLine/Hack4Nepal/3us.jpg'
-
     ]
   },
   {
+    id: 4,
     date: 'May, 2025',
     title: 'AAVISHKAR-25',
     desc: 'First-Runnerup in the AAVISHKAR-25 hackathon, showcasing innovative solutions and teamwork. The journey was filled with challenges, learning, and memorable experiences.',
@@ -52,10 +55,24 @@ const TIMELINE_DATA = [
 ];
 
 export default function ArchiveTimeline() {
-  // CRITICAL FIX: Forces page container to reset immediately to absolute top on layout mount phase
+  const location = useLocation();
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, []);
+    const scrollToId = location.state?.scrollToId;
+
+    if (scrollToId) {
+      const timer = setTimeout(() => {
+        const targetElement = document.getElementById(scrollToId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+
+      return () => clearTimeout(timer);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [location.state]);
 
   return (
     <div className="min-h-screen w-full bg-slate-50/50 text-slate-800 py-24 px-6 md:px-12 lg:px-24 select-none">
@@ -65,13 +82,15 @@ export default function ArchiveTimeline() {
         <div className="mb-20">
           <Link 
             to="/" 
-            state={{ scrollToId: 'gallery' }} // 👈 Fixed: Communicates target explicitly via history state payload
+            state={{ scrollToId: 'gallery' }}
             className="inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-slate-900 mb-6 group transition-colors focus:outline-none"
           >
             <FiArrowLeft className="transform group-hover:-translate-x-1 transition-transform" /> 
             BACK TO PORTFOLIO
           </Link>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mt-2">The Journey Beyond Projects</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mt-2">
+            The Journey Beyond Projects
+          </h1>
         </div>
 
         {/* Center Vertical Rule Axis */}
@@ -83,8 +102,9 @@ export default function ArchiveTimeline() {
 
             return (
               <div 
-                key={entry.date} 
-                className={`flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 items-center relative ${
+                key={entry.id}
+                id={`timeline-item-${entry.id}`}
+                className={`scroll-mt-28 flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 items-center relative ${
                   isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
