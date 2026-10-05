@@ -32,20 +32,31 @@
     "github": "https://github.com/Tusharparihast/Automatic-Doctor-Appointment-using-n8n"
   },
   {
-    "id": "domestic-animal-classification",
-    "domain": "Computer Vision / Deep Learning",
-    "metrics": "95.4% Validation Accuracy",
-    "title": "Domestic Animal Image Classification System",
-    "shortDescription": "A CNN-based image classification system designed to recognize and categorize domestic animal species from visual data.",
-    "longDescription": "The Domestic Animal Image Classification System is a computer vision project focused on identifying and categorizing domestic animal species from images using deep learning techniques. The system explores convolutional neural networks for extracting visual features, learning class-specific patterns, and improving classification performance across multiple categories. The project includes dataset preparation, preprocessing, training, evaluation, and performance tuning with methods such as augmentation and transfer learning. This work highlights the practical use of AI in livestock-related analytics, educational tools, and automated image recognition systems for real-world visual understanding tasks.",
-    "features": [
-      "Custom Dataset Preparation: Images were collected, cleaned, and organized for multi-class training.",
-      "CNN-Based Classification: Uses deep learning to learn discriminative features from animal images.",
-      "Practical Applications: Can support livestock monitoring, education, and automated recognition systems."
-    ],
-    "image": "/images/Projects/classification.png",
-    "tech": ["PyTorch", "CNNs", "Transfer Learning", "Python"],
-    "github": "private"
+  "id": "domestic-animal-classification",
+  "domain": "Computer Vision / Deep Learning",
+  "metrics": "95.95% Test Accuracy • 94.96% Macro F1",
+  "title": "Domestic Animal Image Classification System",
+  "shortDescription": "A 9-class domestic animal image classifier built with PyTorch, transfer learning, and systematic dataset quality validation.",
+  "longDescription": "A computer vision project that classifies 9 domestic animal species using a dataset of 10,778 images. The project covers the complete workflow from dataset quality assurance and class distribution analysis to transfer learning, fine-tuning, and final evaluation. To reduce data leakage, exact duplicates were removed and 382 cross-split near-duplicate pairs were identified using perceptual hashing (pHash), with 293 duplicate relationships further confirmed using ORB feature matching. ResNet50 and EfficientNet-B0 were trained using a two-stage transfer learning and fine-tuning strategy. ResNet50 achieved the best final performance with 95.95% test accuracy and 94.96% macro F1, slightly outperforming EfficientNet-B0.",
+  "features": [
+    "9-Class Classification: Recognizes Buffalo, Camel, Cat, Chicken, Donkey, Goat, Horse, Pig, and Sheep.",
+    "Dataset Quality Assurance: Analyzed 10,778 images for corruption, formats, dimensions, class distribution, exact duplicates, and near-duplicate leakage.",
+    "Leakage Detection: Used pHash to identify 382 cross-split near-duplicate pairs and ORB verification to confirm 293 duplicate relationships.",
+    "Transfer Learning: Compared ImageNet-pretrained ResNet50 and EfficientNet-B0 through staged training and fine-tuning.",
+    "Class Imbalance Handling: Used data redistribution, augmentation, and weighted sampling to improve learning across classes.",
+    "Model Evaluation: Achieved 95.95% test accuracy and 94.96% macro F1 with ResNet50."
+  ],
+  "image": "/images/Projects/classification.png",
+  "tech": [
+    "Python",
+    "PyTorch",
+    "ResNet50",
+    "EfficientNet-B0",
+    "Transfer Learning",
+    "OpenCV",
+    "pHash"
+  ],
+  "github": "https://github.com/Tusharparihast/Domestic-Animal-Classification"
   },
   {
     "id": "traffic-sign-detection",
