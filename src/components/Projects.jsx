@@ -1,205 +1,177 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; 
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { FiArrowRight } from 'react-icons/fi';
 import projects from '../data/projectData.json';
-import { FiArrowRight, FiX, FiLayers } from 'react-icons/fi'; // 👈 Removed unused FiGithub icon
 
 export default function Projects() {
-  const navigate = useNavigate(); 
-  const [selectedId, setSelectedId] = useState(null);
-  const activeProject = projects.find(p => p.id === selectedId);
+  const navigate = useNavigate();
 
-  // SCROLL LOCK EFFECT
-  useEffect(() => {
-    if (selectedId) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedId]);
+  const featuredProject = projects[0];
+  const gridProjects = projects.slice(1, 5);
 
-  // Framer Motion variant orchestrations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
+  const handleNavigateAll = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/projects');
   };
 
   return (
-    <section id="projects" className="relative min-h-screen py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto border-t border-slate-100">
-      
-      {/* Section Header */}
-      <div className="mb-16 text-center lg:text-left">
-        <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-          Featured Works
-        </h2>
-      </div>
-
-      {/* PROJECTS GRID */}
-      <motion.div 
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-      >
-        {projects.map((project) => (
-          <motion.div
-            key={project.id}
-            variants={cardVariants}
-            layoutId={`card-container-${project.id}`}
-            onClick={() => {
-              setSelectedId(project.id);
-              window.history.replaceState(null, '', '/#projects');
-            }}
-            className="bg-gray-100 hover:bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-500/50 cursor-pointer flex flex-col justify-between group min-h-[20rem] relative transition-colors duration-300"
-            whileHover={{ 
-              y: -4,
-              boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.04), 0 4px 6px -4px rgb(0 0 0 / 0.04)"
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    <section id="projects" className="bg-[#F7F4EB] py-10 md:py-12 px-6 md:px-12 lg:px-20 text-[#1C1917]">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Section Header */}
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <span className="text-xs font-semibold tracking-widest text-[#8C827A] uppercase mb-1 block font-mono">
+              SELECTED WORK
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1C1917]">
+              My Projects
+            </h2>
+          </div>
+          
+          {/* Functional Desktop View All Button */}
+          <button 
+            onClick={handleNavigateAll}
+            className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-[#EDE8DC] hover:bg-[#E2DCCF] text-xs font-mono font-bold text-[#2B1D12] transition-all border border-[#2B1D12]/10"
           >
-            <div>
-              <div className="flex items-start gap-5 mb-5">
-                <div className="w-24 h-24 md:w-28 md:h-28 rounded-xl bg-slate-50 border border-slate-200/60 overflow-hidden shrink-0 flex items-center justify-center p-1.5 relative">
-                  {project.image ? (
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="max-w-full max-h-full object-contain object-center group-hover:scale-[1.02] transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                  ) : null}
-                  <div className="hidden w-full h-full items-center justify-center bg-slate-100 text-slate-400 absolute inset-0">
-                    <FiLayers size={24} />
-                  </div>
-                </div>
+            View All ({projects.length}) <FiArrowRight size={14} />
+          </button>
+        </div>
 
-                <div className="space-y-1.5 min-w-0 flex-1 pt-1">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-mono font-semibold">
-                    <span className="text-slate-500 uppercase tracking-wider">{project.domain}</span>
-                    <span className="text-slate-300 hidden sm:inline">•</span>
-                    <span className="text-emerald-600 font-medium">{project.metrics}</span>
+        {/* Main Bento Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          {/* FEATURED LEFT CARD */}
+          {featuredProject && (
+            <motion.div
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                navigate(`/projects/${featuredProject.id}`);
+              }}
+              className="lg:col-span-6 bg-[#2B1D12] text-[#F7F4EB] rounded-3xl overflow-hidden cursor-pointer flex flex-col justify-between group shadow-sm hover:shadow-xl transition-all duration-300"
+              whileHover={{ y: -4 }}
+              transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            >
+              {/* Edge-to-Edge Image Container */}
+              <div className="relative w-full aspect-[16/8] bg-[#3B2A1E] overflow-hidden">
+                {featuredProject.image ? (
+                  <img
+                    src={featuredProject.image}
+                    alt={featuredProject.title}
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#4A3728] flex items-center justify-center text-[#8C827A]">
+                    No Preview Available
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug group-hover:text-blue-600 transition-colors duration-200">
-                    {project.title}
-                  </h3>
-                </div>
+                )}
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
-                {project.shortDescription}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-slate-700 group-hover:text-blue-600 transition-colors pt-4 border-t border-slate-100/80 mt-4">
-              Explore Overview <FiArrowRight className="transform group-hover:translate-x-1 transition-transform duration-200" />
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* EXPANDED MORPHED MODAL */}
-      <AnimatePresence>
-        {selectedId && activeProject && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-slate-900/30 z-[60]"
-              onClick={() => setSelectedId(null)}
-            />
-
-            <div 
-              className="fixed inset-0 flex items-center justify-center z-[61] p-4 md:p-6 cursor-pointer"
-              onClick={() => setSelectedId(null)}
-            >
-              <motion.div
-                layoutId={`card-container-${selectedId}`}
-                onClick={(e) => e.stopPropagation()}
-                className="bg-white w-full max-w-2xl rounded-3xl p-6 md:p-8 shadow-2xl border border-slate-100 flex flex-col justify-between overflow-hidden max-h-[85vh] cursor-default"
-              >
+              {/* Card Body */}
+              <div className="p-5 flex flex-col justify-between flex-1">
                 <div>
-                  {/* Top Bar Navigation Actions */}
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
-                      {activeProject.domain}
-                    </span>
-                    <button 
-                      onClick={() => setSelectedId(null)}
-                      className="p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-full transition-colors"
-                    >
-                      <FiX size={20} />
-                    </button>
-                  </div>
+                  {/* Category Pill with high contrast */}
+                  <span className="inline-block px-3.5 py-1 bg-[#3D2B1E] text-amber-200 border border-amber-500/20 text-xs font-mono font-semibold rounded-full mb-3 shadow-sm">
+                    {featuredProject.domain || 'AI / Automation'}
+                  </span>
 
-                  {/* Title Block */}
-                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
-                    {activeProject.title}
+                  {/* Title */}
+                  <h3 className="text-xl md:text-2xl font-serif font-bold mb-2 leading-snug">
+                    {featuredProject.title}
                   </h3>
 
-                  {/* High-Fidelity Stats Bar */}
-                  <div className="p-4 bg-slate-50 border border-slate-100 rounded-2xl mb-6 flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Core Benchmark</span>
-                    <span className="text-sm font-bold text-emerald-600 font-mono bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full">{activeProject.metrics}</span>
+                  {/* Description */}
+                  <p className="text-white/70 text-xs leading-relaxed mb-4 line-clamp-2">
+                    {featuredProject.shortDescription}
+                  </p>
+
+                  {/* Tech Stack Pills with high contrast */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {featuredProject.tech?.map((tech, idx) => (
+                      <span key={idx} className="px-2.5 py-0.5 bg-[#3D2B1E] text-amber-100/90 text-xs font-mono font-medium rounded-full border border-white/10">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Button */}
+                <div>
+                  <button className="inline-flex items-center gap-2 px-4 py-2 bg-[#F7F4EB] text-[#2B1D12] rounded-full text-xs font-bold font-mono hover:bg-white transition-colors">
+                    View Project <FiArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* SECONDARY 2x2 RIGHT GRID */}
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {gridProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  navigate(`/projects/${project.id}`);
+                }}
+                className="bg-[#EDE8DC]/80 hover:bg-[#EDE8DC] rounded-3xl overflow-hidden flex flex-col justify-between cursor-pointer group transition-colors duration-300 border border-[#2B1D12]/10 shadow-sm"
+                whileHover={{ y: -4 }}
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+              >
+                <div>
+                  {/* Edge-to-Edge Image Preview with Distinct Floating Badge */}
+                  <div className="relative w-full aspect-[16/7] overflow-hidden bg-[#DCD5C5]">
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[#8C827A] text-xs font-mono">
+                        No Preview
+                      </div>
+                    )}
+
+                    {/* Distinct Dark Floating Category Badge */}
+                    <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 bg-[#1C1917]/90 backdrop-blur-md text-[#F7F4EB] text-[10px] font-mono font-semibold rounded-full shadow-md border border-white/10">
+                      {project.domain || 'Computer Vision'}
+                    </span>
                   </div>
 
-                  {/* TECHNICAL SUMMARY */}
-                  <div className="relative mb-8">
-                    <p className="text-slate-600 text-sm md:text-base leading-relaxed line-clamp-3">
-                      {activeProject.longDescription || activeProject.shortDescription}
-                    </p>
-                    <div className="absolute bottom-0 inset-x-0 h-4 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-                  </div>
+                  {/* Text Body */}
+                  <div className="p-3.5">
+                    <h4 className="text-sm font-bold font-serif text-[#1C1917] mb-2 group-hover:text-[#2B1D12] transition-colors leading-snug line-clamp-1">
+                      {project.title}
+                    </h4>
 
-                  {/* Pipeline Stack */}
-                  <div className="mb-6">
-                    <div className="flex flex-wrap gap-2">
-                      {activeProject.tech.map((t, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200/60 font-mono shadow-sm">
-                          {t}
+                    {/* Distinct Tech Stack Pills */}
+                    <div className="flex flex-wrap gap-1">
+                      {project.tech?.slice(0, 3).map((tech, idx) => (
+                        <span key={idx} className="px-2 py-0.5 bg-[#DCD5C5] text-[#2B1D12] text-[10px] font-mono font-medium rounded-full border border-[#2B1D12]/10">
+                          {tech}
                         </span>
                       ))}
                     </div>
                   </div>
                 </div>
-
-                {/* Footer Action Bar */}
-                <div className="flex flex-col sm:flex-row items-center gap-3 pt-5 border-t border-slate-100 mt-4">
-                  {/* 👈 Source Code anchor button completely removed from here */}
-                  <button
-                    onClick={() => {
-                      setSelectedId(null); 
-                      navigate(`/projects/${activeProject.id}`); 
-                    }}
-                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 transition-colors sm:ml-auto font-mono font-bold"
-                  >
-                    View Deep Dive <FiArrowRight size={16} />
-                  </button>
-                </div>
               </motion.div>
-            </div>
-          </>
-        )}
-      </AnimatePresence>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Mobile View All Button */}
+        <div className="mt-6 text-center sm:hidden">
+          <button 
+            onClick={handleNavigateAll}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#2B1D12] text-[#F7F4EB] rounded-full text-xs font-mono font-bold"
+          >
+            View All Projects ({projects.length}) <FiArrowRight size={14} />
+          </button>
+        </div>
+
+      </div>
     </section>
   );
 }

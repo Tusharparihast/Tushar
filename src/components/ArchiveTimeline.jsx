@@ -1,74 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiCalendar, FiArrowLeft } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
+import galleryData from '../data/galleryData.json';
 
-const TIMELINE_DATA = [
-  {
-    id: 1,
-    date: 'June, 2026',
-    title: 'eSewa Hackathon',
-    desc: 'The best hackathon experience of my life — filled with ideas, friendships, sleepless nights, and memories that will stay with me forever.',
-    images: [
-      'images/TimeLine/june/01.jpeg',
-      'images/TimeLine/june/02.jpeg',
-      'images/TimeLine/june/esewa.jpeg',
-      'images/TimeLine/june/Group.jpeg',
-      'images/TimeLine/june/me.jpeg',
-      'images/TimeLine/june/board.jpeg',
-      'images/TimeLine/june/rhino.jpeg'
-    ]
-  },
-  {
-    id: 2,
-    date: 'January, 2026',
-    title: 'AI Conclave',
-    desc: 'Served as a Stall Lead at AI Conclave, coordinating demonstrations, engaging visitors, and showcasing AI innovations during the event.',
-    images: [
-      '/images/TimeLine/ai-conclave/dog.jpeg',
-      '/images/TimeLine/ai-conclave/Group.JPG',
-    ]
-  },
-  {
-    id: 3,
-    date: 'June, 2025',
-    title: 'Hack for Nepal - 2025',
-    desc: 'Ideas, teamwork, laughs, and a little bit of chaos — Hack for Nepal 2025 was a memorable journey.',
-    images: [
-      '/images/TimeLine/Hack4Nepal/group.jpg',
-      '/images/TimeLine/Hack4Nepal/me.jpeg',
-      '/images/TimeLine/Hack4Nepal/certificate.jpeg',
-      '/images/TimeLine/Hack4Nepal/3us.jpg'
-    ]
-  },
-  {
-    id: 4,
-    date: 'May, 2025',
-    title: 'AAVISHKAR-25',
-    desc: 'First-Runnerup in the AAVISHKAR-25 hackathon, showcasing innovative solutions and teamwork. The journey was filled with challenges, learning, and memorable experiences.',
-    images: [
-      'images/TimeLine/aaviskar/group.jpeg',
-      'images/TimeLine/aaviskar/Bot.jpeg',
-      'images/TimeLine/aaviskar/certificate.jpeg'
-    ]
-  }
-];
+const TIMELINE_DATA = galleryData.timeline;
 
 export default function ArchiveTimeline() {
   const location = useLocation();
+  const [highlightedId, setHighlightedId] = useState(null);
 
   useEffect(() => {
     const scrollToId = location.state?.scrollToId;
+    const targetHighlightId = location.state?.highlightId || scrollToId;
 
     if (scrollToId) {
       const timer = setTimeout(() => {
         const targetElement = document.getElementById(scrollToId);
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setHighlightedId(targetHighlightId);
         }
       }, 100);
 
-      return () => clearTimeout(timer);
+      const clearHighlightTimer = setTimeout(() => {
+        setHighlightedId(null);
+      }, 2500);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(clearHighlightTimer);
+      };
     } else {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
@@ -99,12 +61,28 @@ export default function ArchiveTimeline() {
         <div className="space-y-24 relative">
           {TIMELINE_DATA.map((entry, idx) => {
             const isEven = idx % 2 === 0;
+            const elementId = `timeline-item-${entry.id}`;
+            const isHighlighted = highlightedId === elementId;
 
             return (
-              <div 
+              <motion.div 
                 key={entry.id}
-                id={`timeline-item-${entry.id}`}
-                className={`scroll-mt-28 flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 items-center relative ${
+                id={elementId}
+                animate={
+                  isHighlighted
+                    ? {
+                        scale: [1, 1.05, 1, 1.05, 1],
+                      }
+                    : { scale: 1 }
+                }
+                transition={{
+                  duration: 1.2,
+                  ease: 'easeInOut',
+                  times: [0, 0.25, 0.5, 0.75, 1],
+                }}
+                className={`scroll-mt-28 flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16 items-center relative rounded-3xl p-4 transition-all duration-300 ${
+                  isHighlighted ? 'border-2 border-blue-500 shadow-xl shadow-blue-500/20 bg-blue-50/30 ring-4 ring-blue-300/40 z-20' : ''
+                } ${
                   isEven ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
@@ -151,7 +129,7 @@ export default function ArchiveTimeline() {
                   ))}
                 </motion.div>
 
-              </div>
+              </motion.div>
             );
           })}
         </div>

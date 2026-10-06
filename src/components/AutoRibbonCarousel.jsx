@@ -1,17 +1,18 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
+import galleryData from '../data/galleryData.json';
 
-const SLIDES = [
-  { id: 1, title: 'eSewa Hackathon', img: '/images/TimeLine/june/Group.jpeg' },
-  { id: 2, title: 'AI Conclave', img: '/images/TimeLine/ai-conclave/Group.JPG' },
-  { id: 3, title: 'AAVISHKAR-25', img: '/images/TimeLine/aaviskar/group.jpeg' },
-  { id: 4, title: 'Hack for Nepal - 2025', img: '/images/TimeLine/Hack4Nepal/group.jpg' },
-];
-
+const SLIDES = galleryData.slides;
 const INFINITE_SLIDES = [...SLIDES, ...SLIDES];
 
-export default function AutoRibbonCarousel() {
+export default function AutoRibbonCarousel({ onSelectGalleryImage }) {
+  const handleImageClick = (slideId) => {
+    if (onSelectGalleryImage) {
+      onSelectGalleryImage(`timeline-item-${slideId}`);
+    }
+  };
+
   return (
     <section id="gallery" className="w-full max-w-full py-24 bg-transparent border-t border-slate-200/60 overflow-hidden scroll-mt-12 relative">
       
@@ -53,7 +54,8 @@ export default function AutoRibbonCarousel() {
               <Link
                 key={`${slide.id}-${idx}`}
                 to="/archive-timeline"
-                state={{ scrollToId: `timeline-item-${slide.id}` }}
+                state={{ scrollToId: `timeline-item-${slide.id}`, highlightId: `timeline-item-${slide.id}` }}
+                onClick={() => handleImageClick(slide.id)}
                 className={`w-[220px] sm:w-[260px] md:w-[280px] aspect-[4/5] bg-slate-100 rounded-[28px] overflow-hidden border border-slate-200/80 flex-shrink-0 relative group/card shadow-sm hover:shadow-md transition-transform duration-300 ${
                   idx % 2 === 1 ? 'translate-y-5' : '-translate-y-3'
                 }`}
@@ -81,7 +83,8 @@ export default function AutoRibbonCarousel() {
               <Link
                 key={`${slide.id}-duplicate-${idx}`}
                 to="/archive-timeline"
-                state={{ scrollToId: `timeline-item-${slide.id}` }}
+                state={{ scrollToId: `timeline-item-${slide.id}`, highlightId: `timeline-item-${slide.id}` }}
+                onClick={() => handleImageClick(slide.id)}
                 className={`w-[220px] sm:w-[260px] md:w-[280px] aspect-[4/5] bg-slate-100 rounded-[28px] overflow-hidden border border-slate-200/80 flex-shrink-0 relative group/card shadow-sm hover:shadow-md transition-transform duration-300 ${
                   idx % 2 === 1 ? 'translate-y-5' : '-translate-y-3'
                 }`}

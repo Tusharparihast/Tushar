@@ -28,6 +28,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const location = useLocation();
   const navigate = useNavigate();
   const clickedSection = useRef(null);
+  const drawerRef = useRef(null);
 
   const navLinks = [
     { title: 'Home', path: '/#top', id: 'top' },
@@ -38,6 +39,31 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
     { title: 'Gallery', path: '/#gallery', id: 'gallery' },
     { title: 'Contact', path: '/#contact', id: 'contact' },
   ];
+
+  // Close drawer on scroll or outside tap/click
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleScroll = () => {
+      setIsOpen(false);
+    };
+
+    const handleOutsideTouch = (e) => {
+      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    document.addEventListener('touchstart', handleOutsideTouch, { passive: true });
+    document.addEventListener('mousedown', handleOutsideTouch);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('touchstart', handleOutsideTouch);
+      document.removeEventListener('mousedown', handleOutsideTouch);
+    };
+  }, [isOpen]);
 
   // 1. Intersection Observer for Sections + Scroll Listener for Home
   useEffect(() => {
@@ -195,6 +221,7 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
           TP
         </Link>
 
+        {/* DESKTOP NAVIGATION */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link, idx) => {
             const isActive = activeSection === link.id;
@@ -226,45 +253,63 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
           })}
         </nav>
 
+        {/* MOBILE MENU TOGGLE BUTTON */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="ml-auto block md:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+          className="ml-auto block md:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors z-50"
+          aria-label="Toggle Navigation"
         >
           {isOpen ? <FiX size={22} /> : <FiMenu size={22} />}
         </button>
       </header>
 
+      {/* MOBILE LEFT SLIDE-IN DRAWER & OVERLAY */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{
-              duration: 0.25,
-              ease: 'easeInOut',
-            }}
-            className="fixed inset-0 top-[65px] bg-white/40 backdrop-blur-xl z-40 flex flex-col p-6 gap-6 md:hidden border-b border-slate-200/40 shadow-xl shadow-slate-900/5 h-fit"
-          >
-            {navLinks.map((link, idx) => (
-              <Link
-                key={idx}
-                smooth
-                to={link.path}
-                scroll={scrollWithOffset}
-                onClick={(e) =>
-                  handleNavigationClick(e, link.path, link.id)
-                }
-                className={`text-lg font-bold font-mono border-b border-slate-200/30 pb-3 transition-colors ${
-                  activeSection === link.id
-                    ? 'text-blue-600 pl-2 border-blue-500/30'
-                    : 'text-slate-800 hover:text-blue-600'
-                }`}
-              >
-                {link.title}
-              </Link>
-            ))}
-          </motion.div>
+          <div className="fixed inset-0 z-40 md:hidden">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm"
+            />
+
+            {/* Left Drawer */}
+            <motion.div
+              ref={drawerRef}
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+              className="absolute top-0 left-0 bottom-0 w-[78vw] max-w-xs h-screen bg-white/90 backdrop-blur-xl border-r border-slate-200/50 shadow-2xl flex flex-col p-6 pt-20 gap-4 overflow-y-auto"
+            >
+              <div className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-widest mb-2 px-2">
+                Navigation
+              </div>
+
+              {navLinks.map((link, idx) => (
+                <Link
+                  key={idx}
+                  smooth
+                  to={link.path}
+                  scroll={scrollWithOffset}
+                  onClick={(e) =>
+                    handleNavigationClick(e, link.path, link.id)
+                  }
+                  className={`text-base font-bold font-mono px-3 py-2.5 rounded-xl transition-all ${
+                    activeSection === link.id
+                      ? 'text-blue-600 bg-blue-50/80 border border-blue-200/50'
+                      : 'text-slate-800 hover:text-blue-600 hover:bg-slate-100/50'
+                  }`}
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </>

@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import BlogMarquee from './components/BlogMarquee';
 import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
+import AllProjects from './components/AllProjects';
 import BlogDetails from './components/BlogDetails'; 
 import ScrollToTop from './components/ScrollToTop';
 import WelcomeScreen from './components/WelcomeScreen'; 
@@ -27,9 +28,9 @@ function MainDashboard() {
       </div>
 
       <About />
+      <Projects />
       <Skills />
       <TimelineAndCards />
-      <Projects />
       <BlogMarquee />
       <AutoRibbonCarousel />
     </div>
@@ -165,6 +166,7 @@ function AppContent() {
         <div className="relative z-10">
           <Routes>
             <Route path="/" element={<MainDashboard />} />
+            <Route path="/projects" element={<AllProjects />} />
             <Route path="/projects/:id" element={<ProjectDetails />} />
             <Route path="/blog/:id" element={<BlogDetails />} />
             <Route path="/archive-timeline" element={<ArchiveTimeline />} />

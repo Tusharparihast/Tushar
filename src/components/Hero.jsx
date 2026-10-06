@@ -139,7 +139,7 @@ export default function Hero() {
                   rel="noopener noreferrer"
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
+                  className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-black text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transition-colors duration-300 shadow-sm"
                 >
                   <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-slate-700 via-stone-700 to-slate-800 transform -translate-x-full transition-transform duration-500 ease-out group-hover:translate-x-0" />
 
@@ -155,15 +155,15 @@ export default function Hero() {
                   href="#contact"
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                  className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-[#090D16]/90 text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm"
+                  className="group relative overflow-hidden w-full sm:w-auto px-5 py-3 bg-black text-slate-200 border border-slate-700/80 hover:border-slate-400 font-semibold rounded-xl md:rounded-lg text-xs sm:text-sm text-center flex items-center justify-center transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm"
                 >
                   {/* DEFAULT CONTENT */}
-                  <div className="flex items-center justify-center gap-2 transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-10 group-hover:opacity-0 will-change-transform">
+                  <div className="flex items-center justify-center gap-2 transform-gpu transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-10 group-hover:opacity-0 will-change-transform">
                     <span>Let&apos;s Connect</span>
                   </div>
 
                   {/* HOVER SWIPE CONTENT */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-2 transform-gpu translate-y-10 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-slate-800 text-white will-change-transform">
+                  <div className="absolute inset-0 flex items-center justify-center gap-2 transform-gpu translate-y-10 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-[#090D16]/90 text-white will-change-transform">
                     <FiMail size={16} className="transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110" />
                   </div>
                 </motion.a>

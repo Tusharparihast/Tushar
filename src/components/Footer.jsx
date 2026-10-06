@@ -128,13 +128,13 @@ export default function Footer() {
               className="relative group overflow-hidden px-7 py-3.5 bg-blue-600 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-600/20 active:scale-95 transform-gpu transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
             >
               {/* DEFAULT CONTENT */}
-              <div className="flex items-center gap-2.5 transform-gpu transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-12 group-hover:opacity-0 will-change-transform">
+              <div className="flex items-center gap-2.5 transform-gpu transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:-translate-y-12 group-hover:opacity-0 will-change-transform">
                 <FiMail size={18} />
                 <span>Get in touch</span>
               </div>
 
               {/* HOVER SWIPE CONTENT */}
-              <div className="absolute inset-0 flex items-center justify-center transform-gpu translate-y-12 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-blue-600 text-white will-change-transform">
+              <div className="absolute inset-0 flex items-center justify-center transform-gpu translate-y-12 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-blue-600 text-white will-change-transform">
                 <FiMail size={22} className="transform-gpu transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110" />
               </div>
             </button>
