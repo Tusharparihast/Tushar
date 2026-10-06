@@ -33,8 +33,8 @@ export default function Navbar({ onLinkClick, onSmoothLinkClick }) {
   const navLinks = [
     { title: 'Home', path: '/#top', id: 'top' },
     { title: 'About', path: '/#about', id: 'about' },
-    { title: 'My Journey', path: '/#journey', id: 'journey' },
     { title: 'Projects', path: '/#projects', id: 'projects' },
+    { title: 'My Journey', path: '/#journey', id: 'journey' },
     { title: 'Insights', path: '/#blog', id: 'blog' },
     { title: 'Gallery', path: '/#gallery', id: 'gallery' },
     { title: 'Contact', path: '/#contact', id: 'contact' },
