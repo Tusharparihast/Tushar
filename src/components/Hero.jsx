@@ -163,7 +163,7 @@ export default function Hero() {
                   </div>
 
                   {/* HOVER SWIPE CONTENT */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-2 transform-gpu translate-y-10 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-[#090D16]/90 text-white will-change-transform">
+                  <div className="absolute inset-0 flex items-center justify-center gap-2 transform-gpu translate-y-10 opacity-0 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-y-0 group-hover:opacity-100 bg-black text-white will-change-transform">
                     <FiMail size={16} className="transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110" />
                   </div>
                 </motion.a>

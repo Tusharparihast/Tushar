@@ -1,78 +1,159 @@
 [
+  {
+    "id": "domestic-animal-classification",
+    "domain": "Computer Vision / Deep Learning",
+    "metrics": "95.95% Test Accuracy • 94.96% Macro F1",
+    "title": "Domestic Animal Image Classification System",
+    "shortDescription": "A 9-class domestic animal classifier built with PyTorch transfer learning, dataset quality assurance, leakage detection, and systematic model comparison.",
+    "longDescription": "A complete computer vision pipeline for classifying 9 domestic animal species from a custom-cleaned dataset. The project covers dataset quality assurance, corruption and format analysis, exact duplicate removal, cross-split near-duplicate investigation, class balancing, augmentation, transfer learning, fine-tuning, and final evaluation. Perceptual hashing and ORB feature matching were used to investigate near-duplicate leakage before training. ResNet50 and EfficientNet-B0 were trained using a two-stage transfer-learning strategy, with ResNet50 achieving the best final performance at 95.95% test accuracy and 94.96% macro F1.",
+    "features": [
+      "9-Class Classification: Recognizes Buffalo, Camel, Cat, Chicken, Donkey, Goat, Horse, Pig, and Sheep.",
+      "Dataset Quality Assurance: Analyzed image integrity, dimensions, formats, color modes, class distribution, duplicates, and near-duplicate relationships.",
+      "Leakage Detection: Used pHash for near-duplicate discovery and ORB feature matching for visual verification across dataset splits.",
+      "Transfer Learning: Compared ImageNet-pretrained ResNet50 and EfficientNet-B0 using staged training and fine-tuning.",
+      "Class Imbalance Handling: Combined dataset redistribution, augmentation, and weighted random sampling.",
+      "Model Evaluation: Compared accuracy, macro precision, macro recall, macro F1, weighted F1, and confusion matrices."
+    ],
+    "image": "/images/Projects/classification.png",
+    "tech": [
+      "Python",
+      "PyTorch",
+      "ResNet50",
+      "EfficientNet-B0",
+      "Transfer Learning",
+      "OpenCV",
+      "pHash"
+    ],
+    "github": "https://github.com/Tusharparihast/Domestic-Animal-Classification-on-Custom-Data"
+  },
+  {
+    "id": "doctor-appointment-ai",
+    "domain": "AI Automation / Workflow Engineering",
+    "metrics": "AI Symptom Triage • Automated Scheduling • Invoicing",
+    "title": "AI-Powered Doctor Appointment Automation System",
+    "shortDescription": "An end-to-end healthcare automation platform combining AI symptom intake, doctor matching, appointment scheduling, notifications, and automated invoicing.",
+    "longDescription": "An end-to-end healthcare workflow system built around n8n, Supabase/PostgreSQL, and a web frontend. The platform combines AI-assisted symptom intake and doctor specialization matching with automated appointment booking, availability handling, notification workflows, and invoice generation. Separate orchestration and worker workflows connect webhooks, database procedures, and AI reasoning into a single operational pipeline. PostgreSQL functions handle doctor availability and booking rules while n8n coordinates the automation between user requests, scheduling, notifications, and billing.",
+    "features": [
+      "AI Symptom Intake: Processes patient symptom descriptions and determines medical specialization and urgency categories.",
+      "Doctor Matching: Uses AI-assisted reasoning to map symptoms to supported medical specializations.",
+      "Automated Scheduling: Generates available slots and books appointments using PostgreSQL scheduling logic.",
+      "Workflow Orchestration: Uses webhook-driven n8n workflows for appointment, notification, and backend operations.",
+      "Automated Invoicing: Generates invoices for completed appointments with calculated tax and payment status.",
+      "Database Integration: Uses Supabase/PostgreSQL tables, functions, constraints, and indexes for persistent workflow state."
+    ],
+    "image": "/images/Projects/Doc.png",
+    "tech": [
+      "n8n",
+      "AI Workflows",
+      "Webhooks",
+      "Supabase",
+      "PostgreSQL",
+      "Automation"
+    ],
+    "github": "https://github.com/Tusharparihast/Automatic-Doctor-Appointment-using-n8n"
+  },
+  {
+    "id": "nlp-text-processing-api",
+    "domain": "NLP / AI Backend Engineering",
+    "metrics": "Modular NLP API • TF-IDF Similarity Search",
+    "title": "NLP Text Processing & Document Similarity API",
+    "shortDescription": "A modular FastAPI NLP backend for linguistic analysis, named entity extraction, TF-IDF document vectors, similarity matching, and embedding visualization.",
+    "longDescription": "A modular NLP backend application built with FastAPI that exposes a complete text-processing and document-similarity workflow through API endpoints. The system performs tokenization, lemmatization, stemming, part-of-speech tagging, and named entity recognition, then transforms documents into TF-IDF vectors for similarity analysis. Query vectors are compared against a custom corpus using cosine similarity, while PCA and t-SNE projections provide 2D visualization of the document vector space. The backend separates routing, schemas, NLP processing, and embedding logic for a cleaner service-oriented architecture.",
+    "features": [
+      "Lexical Processing: Supports tokenization, lemmatization, and stemming through dedicated API endpoints.",
+      "Linguistic Analysis: Uses spaCy for part-of-speech tagging and named entity recognition.",
+      "Document Vectorization: Converts corpus documents into TF-IDF vectors for numerical text representation.",
+      "Similarity Search: Uses cosine similarity to retrieve the nearest documents for an input query.",
+      "Embedding Visualization: Projects document vectors into 2D space using PCA or t-SNE.",
+      "API Architecture: Uses FastAPI with separated routes, schemas, and service modules."
+    ],
+    "image": "/images/Projects/nlp.png",
+    "tech": [
+      "Python",
+      "FastAPI",
+      "spaCy",
+      "NLTK",
+      "Scikit-learn",
+      "TF-IDF",
+      "Cosine Similarity",
+      "PCA",
+      "t-SNE"
+    ],
+    "github": "https://github.com/Tusharparihast/NLP-preprocessing-doc-embeddings-application-"
+  },
     {
-  "id": "domestic-animal-classification",
-  "domain": "Computer Vision / Deep Learning",
-  "metrics": "95.95% Test Accuracy • 94.96% Macro F1",
-  "title": "Domestic Animal Image Classification System",
-  "shortDescription": "A 9-class domestic animal image classifier built with PyTorch, transfer learning, and systematic dataset quality validation.",
-  "longDescription": "A computer vision project that classifies 9 domestic animal species using a dataset of 10,778 images. The project covers the complete workflow from dataset quality assurance and class distribution analysis to transfer learning, fine-tuning, and final evaluation. To reduce data leakage, exact duplicates were removed and 382 cross-split near-duplicate pairs were identified using perceptual hashing (pHash), with 293 duplicate relationships further confirmed using ORB feature matching. ResNet50 and EfficientNet-B0 were trained using a two-stage transfer learning and fine-tuning strategy. ResNet50 achieved the best final performance with 95.95% test accuracy and 94.96% macro F1, slightly outperforming EfficientNet-B0.",
-  "features": [
-    "9-Class Classification: Recognizes Buffalo, Camel, Cat, Chicken, Donkey, Goat, Horse, Pig, and Sheep.",
-    "Dataset Quality Assurance: Analyzed 10,778 images for corruption, formats, dimensions, class distribution, exact duplicates, and near-duplicate leakage.",
-    "Leakage Detection: Used pHash to identify 382 cross-split near-duplicate pairs and ORB verification to confirm 293 duplicate relationships.",
-    "Transfer Learning: Compared ImageNet-pretrained ResNet50 and EfficientNet-B0 through staged training and fine-tuning.",
-    "Class Imbalance Handling: Used data redistribution, augmentation, and weighted sampling to improve learning across classes.",
-    "Model Evaluation: Achieved 95.95% test accuracy and 94.96% macro F1 with ResNet50."
-  ],
-  "image": "/images/Projects/classification.png",
-  "tech": [
-    "Python",
-    "PyTorch",
-    "ResNet50",
-    "EfficientNet-B0",
-    "Transfer Learning",
-    "OpenCV",
-    "pHash"
-  ],
-  "github": "https://github.com/Tusharparihast/Domestic-Animal-Classification"
+    "id": "mehndi-mastery-studio",
+    "domain": "Full-Stack Engineering / Business Automation",
+    "metrics": "Bilingual Platform • Real-Time Admin • Booking & E-Commerce",
+    "title": "Mehndi Mastery Studio",
+    "shortDescription": "A production-oriented bilingual business platform with real-time content management, booking, e-commerce, and role-based administration.",
+    "longDescription": "A full-stack business platform designed for a home-based mehndi studio, combining a public bilingual website with a real administrative system. The platform allows the business owner to manage website content, galleries, courses, products, bookings, inquiries, and branding without editing code. Supabase provides PostgreSQL data storage, authentication, storage, realtime synchronization, and row-level security, while the React frontend implements the public experience and admin dashboard. The project demonstrates practical product engineering, business logic, role-based access, and owner-oriented content management.",
+    "features": [
+      "Owner-Managed CMS: Allows non-technical users to manage website content and business information without redeployment.",
+      "Bilingual Experience: Supports English and Simplified Chinese throughout the platform.",
+      "Booking System: Handles availability, blocked dates, group limits, and appointment requests.",
+      "E-Commerce: Supports products, categories, cart workflows, discounts, and inventory status.",
+      "Role-Based Administration: Uses Supabase Auth, roles, and row-level security for protected admin operations.",
+      "Realtime Backend: Uses Supabase Realtime and PostgreSQL-backed data synchronization."
+    ],
+    "image": "/images/Projects/heena.png",
+    "tech": [
+      "React",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "TanStack Query",
+      "Zod"
+    ],
+    "github": "https://github.com/Tusharparihast/Heena-Design-website"
+  },
+  {
+    "id": "information-retrieval",
+    "domain": "Information Retrieval / NLP",
+    "metrics": "TF-IDF Ranking • Positional Indexing • Boolean Retrieval",
+    "title": "Information Retrieval & Search Engine Foundations",
+    "shortDescription": "A Python implementation of core information-retrieval techniques including indexing, Boolean search, TF-IDF ranking, and vector-space similarity.",
+    "longDescription": "A practical implementation of core Information Retrieval concepts using Python. The project covers the complete path from text preprocessing and inverted-index construction to Boolean retrieval and similarity-based ranking. It implements positional indexes for phrase queries, TF-IDF weighting, vector-space document representations, and cosine-similarity ranking. The work also explores posting-list compression using gap encoding, variable-byte encoding, and Golomb encoding, providing a foundation for understanding classical search systems and modern retrieval pipelines.",
+    "features": [
+      "Text Preprocessing: Applies tokenization, stopword removal, stemming, and lemmatization.",
+      "Inverted Indexing: Builds term-to-document posting lists for efficient retrieval.",
+      "Positional Indexing: Stores term positions to support phrase-query matching.",
+      "Boolean Retrieval: Implements AND, OR, and NOT query operations.",
+      "TF-IDF Ranking: Represents documents as weighted vectors based on term importance.",
+      "Similarity Search: Uses cosine similarity to rank documents against user queries.",
+      "Index Compression: Explores gap encoding, variable-byte encoding, and Golomb encoding."
+    ],
+    "image": "/images/Projects/ir.png",
+    "tech": [
+      "Python",
+      "NLP",
+      "Information Retrieval",
+      "TF-IDF",
+      "Inverted Index",
+      "Cosine Similarity"
+    ],
+    "github": "https://github.com/Tusharparihast/Information-Retrieval-Lab"
   },
   {
     "id": "cattle-bcs-cv",
     "domain": "Computer Vision / Deep Learning",
     "metrics": "Still in the development phase",
-    "title": "Automated Cattle Body Condition Scoring (BCS)",
-    "shortDescription": "An edge-oriented computer vision pipeline that uses OpenCV and deep learning to detect skeletal landmarks for non-invasive livestock health assessment.",
-    "longDescription": "The Automated Cattle Body Condition Scoring (BCS) project explores computer vision and deep learning techniques for estimating livestock condition from visual inputs. The system is designed to process cattle imagery, identify key skeletal and contour-based landmarks, and support non-invasive body condition assessment. The project focuses on image preprocessing, landmark localization, feature extraction, and model optimization for practical deployment in edge-based environments. By combining OpenCV with neural network–based learning, this work aims to contribute to more efficient livestock monitoring, animal health evaluation, and smart agriculture applications.",
+    "title": "Automated Cattle Body Condition Scoring",
+    "shortDescription": "An edge-oriented computer vision pipeline exploring landmark localization and visual feature analysis for automated livestock body condition assessment.",
+    "longDescription": "An applied computer vision project exploring automated cattle body condition assessment from visual inputs. The system focuses on identifying important body regions and skeletal or contour-based cues that can contribute to non-invasive livestock health assessment. The project combines OpenCV preprocessing with deep learning approaches while considering efficient inference for practical edge-based deployment. The broader goal is to support automated livestock monitoring and smart agriculture applications.",
     "features": [
-      "Landmark Localization: Detects key body regions and contour cues relevant to body condition analysis.",
-      "Edge-Oriented Design: Built with deployment efficiency in mind for lightweight vision workflows.",
-      "Livestock Health Utility: Supports automated assessment workflows for animal monitoring and farm analytics."
+      "Landmark Localization: Identifies body regions and visual cues relevant to body condition analysis.",
+      "Computer Vision Pipeline: Combines image preprocessing, feature extraction, and deep learning.",
+      "Edge-Oriented Design: Considers inference efficiency for practical deployment scenarios.",
+      "Smart Agriculture Application: Applies computer vision to livestock monitoring and farm analytics."
     ],
     "image": "/images/Projects/BCS.jpeg",
-    "tech": ["OpenCV", "PyTorch", "Python"],
-    "github": "private"
-  },
-  {
-    "id": "doctor-appointment-n8n",
-    "domain": "Workflow Automation / AI Agents",
-    "metrics": "100% Automated Scheduling",
-    "title": "Automated Doctor Appointment System",
-    "shortDescription": "A low-code automation workflow built with n8n to manage appointment requests, slot checks, confirmations, and notifications end to end.",
-    "longDescription": "The Automated Doctor Appointment System is a workflow automation project built using n8n to streamline medical appointment handling without manual intervention. The system is designed to receive user requests, validate availability, route logic through conditional workflows, and send booking confirmations and notifications automatically. It integrates webhook-driven triggers, database connectivity, and automation logic to create a smooth scheduling experience. This project demonstrates how low-code tools and AI-oriented automation pipelines can be applied to healthcare workflows to improve efficiency, reduce repetitive tasks, and enhance user experience.",
-    "features": [
-      "Webhook-Driven Workflow: Accepts appointment requests and triggers automation instantly.",
-      "Smart Slot Handling: Checks availability and routes requests based on scheduling logic.",
-      "Automated Notifications: Sends confirmations and updates without manual follow-up."
+    "tech": [
+      "OpenCV",
+      "PyTorch",
+      "Python"
     ],
-    "image": "/images/Projects/Doc.png",
-    "tech": ["n8n", "Webhooks", "Supabase", "Automation"],
-    "github": "https://github.com/Tusharparihast/Automatic-Doctor-Appointment-using-n8n"
-  },
-
-  {
-    "id": "traffic-sign-detection",
-    "domain": "Computer Vision / Edge AI",
-    "metrics": "30+ FPS Real-Time Inference",
-    "title": "Real-Time Traffic Sign Detection Framework",
-    "shortDescription": "A high-speed object detection framework designed to localize and classify road signs in real time for intelligent driving support.",
-    "longDescription": "The Real-Time Traffic Sign Detection Framework is a computer vision project focused on detecting and classifying traffic signs from image or video streams with real-time performance in mind. The system uses object detection techniques to locate road signs, recognize their categories, and maintain efficient inference rates for practical deployment. The project includes data preparation, detection pipeline design, model evaluation, and performance optimization for edge-aware environments. This framework is relevant to autonomous driving research, driver assistance systems, and intelligent transportation applications where fast and reliable visual understanding is essential.",
-    "features": [
-      "Real-Time Detection: Processes traffic sign inputs efficiently for live inference use cases.",
-      "Object Localization: Identifies and classifies road signs with detection-based vision methods.",
-      "Edge AI Ready: Designed with performance considerations for lightweight deployment scenarios."
-    ],
-    "image": "/images/Projects/traffic.jpeg",
-    "tech": ["OpenCV", "YOLO", "Object Detection", "CUDA"],
     "github": "private"
   }
 ]

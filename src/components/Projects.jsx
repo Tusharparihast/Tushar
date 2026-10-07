@@ -15,7 +15,7 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="bg-[#F7F4EB] py-10 md:py-12 px-6 md:px-12 lg:px-20 text-[#1C1917]">
+    <section id="projects" className="bg-[#F7F4EB] py-16 md:py-20 px-6 md:px-12 lg:px-20 text-[#1C1917]">
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useParams } from 'react-router-dom';
-import { HashLink as Link } from 'react-router-hash-link'; 
+import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; // 👈 Added framer-motion imports
 import { FiArrowLeft, FiGithub, FiLock, FiX } from 'react-icons/fi';
 import projects from '../data/projectData.json';
@@ -22,7 +21,7 @@ export default function ProjectDetails() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-6">
         <h2 className="text-xl font-bold text-slate-800">Pipeline Registry Not Found</h2>
-        <Link to="/#projects" className="mt-4 text-blue-600 hover:underline font-mono text-sm uppercase">
+        <Link to="/" state={{ scrollToId: 'projects' }} className="mt-4 text-blue-600 hover:underline font-mono text-sm uppercase">
           Return to Projects Hub
         </Link>
       </div>
@@ -40,7 +39,7 @@ export default function ProjectDetails() {
     <div className="min-h-screen bg-slate-50 py-24 px-6 md:px-12 lg:px-24 relative z-10 select-none">
       <div className="max-w-4xl mx-auto">
         
-        <Link to="/#projects" className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase">
+        <Link to="/" state={{ scrollToId: 'projects' }} className="inline-flex items-center gap-2 text-sm font-mono text-slate-500 hover:text-blue-600 transition-colors mb-8 uppercase">
           <FiArrowLeft /> Back to Dashboard
         </Link>
 
